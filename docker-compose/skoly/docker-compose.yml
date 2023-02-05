@@ -1,0 +1,49 @@
+version: "3"
+services:
+  skoly-api:
+    build: ../../../skoly-api
+    container_name: skoly-api
+    volumes:
+      - ../../../skoly-api:/var/www
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+  skoly-db:
+    image: mysql:8.0
+    container_name: db
+    # restart: unless-stopped
+    # tty: true
+    ports:
+      - "4306:3306"
+    environment:
+      MYSQL_DATABASE: skoly
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: tajneheslo123
+      MYSQL_ROOT_PASSWORD: tajneheslo123
+      # SERVICE_TAGS: dev
+      # SERVICE_NAME: db
+    # volumes:
+    #   - db-data:/var/lib/mysql
+  skoly-spa:
+    container_name: skoly-spa
+    build: ../../../skoly-spa
+    ports:
+      - "8000:8000"
+    volumes:
+      # - "/app/node_modules"
+      # - ../../../skoly-spa/node_modules
+      - "../../../skoly-spa:/app"
+  # nginx:
+  #   image: nginx:stable-alpine
+  #   container_name: nginx
+  #   ports:
+  #     - "8088:80"
+  #   volumes:
+  #     - ./backend:/var/www
+  #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  #   depends_on:
+  #     - php
+  #     - db
+# volumes:
+#   db-data: ~
