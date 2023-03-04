@@ -1,10 +1,10 @@
 version: "3"
 services:
   api:
-    build: ../../../skoly-api
+    build: ../../skoly-api
     container_name: api
     volumes:
-      - ../../../skoly-api:/var/www
+      - ../../skoly-api:/var/www
     ports:
       - "9000:9000"
     depends_on:
@@ -27,13 +27,13 @@ services:
     #   - db-data:/var/lib/mysql
   spa:
     container_name: spa
-    build: ../../../skoly-spa
+    build: ../../skoly-spa
     ports:
       - "8000:8000"
     volumes:
       - "/app/node_modules"
       # - ../../../skoly-spa/node_modules
-      - "../../../skoly-spa:/app"
+      - "../../skoly-spa:/app"
   # nginx:
   #   image: nginx:stable-alpine
   #   container_name: nginx
