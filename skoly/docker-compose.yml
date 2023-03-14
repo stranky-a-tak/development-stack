@@ -9,6 +9,7 @@ services:
       - "9000:9000"
     depends_on:
       - db
+      - redis
   db:
     image: mysql:8.0
     container_name: db
@@ -34,6 +35,14 @@ services:
       - "/app/node_modules"
       # - ../../../skoly-spa/node_modules
       - "../../skoly-spa:/app"
+  redis:
+    image: redis:alpine
+    container_name: redis
+    command: redis-server --appendonly yes #--requirepass "${REDIS_PASSWORD}"
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6382:6379"
   # nginx:
   #   image: nginx:stable-alpine
   #   container_name: nginx
