@@ -4,7 +4,7 @@ services:
     build: ../../skoly-api
     container_name: api
     volumes:
-      - ../../skoly-api:/var/www
+      - ../../skoly-api:/var/www/api
     ports:
       - "9000:9000"
     depends_on:
@@ -43,16 +43,16 @@ services:
       - ./data/redis:/data
     ports:
       - "6382:6379"
-  # nginx:
-  #   image: nginx:stable-alpine
-  #   container_name: nginx
-  #   ports:
-  #     - "8088:80"
-  #   volumes:
-  #     - ./backend:/var/www
-  #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-  #   depends_on:
-  #     - php
-  #     - db
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ../../skoly-api:/var/www/api
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+      - db
 # volumes:
 #   db-data: ~
